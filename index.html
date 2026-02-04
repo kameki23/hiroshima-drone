@@ -2,910 +2,166 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ひろしまドローン活用推進協議会|未来を創るドローンテクノロジー</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>ひろしまドローン活用推進協議会</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #00d4ff;
             --secondary: #0066ff;
-            --accent: #7c3aed;
             --dark: #0a0e27;
             --darker: #050816;
         }
-
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background: var(--darker);
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        /* ローディングアニメーション */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--darker);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            animation: fadeOut 1s ease 2s forwards;
-        }
-
-        .loading-drone {
-            font-size: 4rem;
-            animation: fly 2s ease-in-out infinite;
-        }
-
-        @keyframes fly {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-
+        body { font-family: 'Noto Sans JP', sans-serif; background: var(--darker); color: #fff; overflow-x: hidden; }
+        
         /* ヘッダー */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-            transition: all 0.3s;
-        }
-
-        header.scrolled {
-            background: rgba(10, 14, 39, 0.98);
-            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
-        }
-
-        nav {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-            letter-spacing: 2px;
-            animation: glow 2s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 5px var(--primary)); }
-            50% { filter: drop-shadow(0 0 20px var(--primary)); }
-        }
-
-        nav ul {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .cta-btn {
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(10, 14, 39, 0.98); border-bottom: 1px solid rgba(0, 212, 255, 0.2); }
+        nav { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-decoration: none; letter-spacing: 2px; }
+        nav ul { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        nav a { color: #fff; text-decoration: none; font-weight: 500; }
+        .cta-btn { background: linear-gradient(135deg, var(--secondary), var(--primary)); padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700; color: #fff; }
+        
+        /* モバイルメニュー */
+        .mobile-menu-btn { display: none; background: var(--primary); color: #fff; border: none; font-size: 1.5rem; padding: 0.5rem 1rem; cursor: pointer; border-radius: 5px; }
+        .mobile-nav { display: none; position: fixed; top: 80px; left: 0; right: 0; background: rgba(10, 14, 39, 0.98); padding: 2rem; z-index: 999; }
+        .mobile-nav.active { display: block; }
+        .mobile-nav ul { display: flex; flex-direction: column; gap: 1.5rem; list-style: none; }
+        .mobile-nav a { display: block; color: #fff; text-decoration: none; font-size: 1.1rem; padding: 0.5rem 0; }
+        
         /* ヒーロー */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.3);
-            animation: zoomIn 20s ease-in-out infinite alternate;
-        }
-
-        @keyframes zoomIn {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0, 102, 255, 0.4), rgba(124, 58, 237, 0.4));
-        }
-
-        .grid-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        /* 浮遊パーティクル */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: float 15s infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
-        }
-
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
-        .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
-        .particle:nth-child(4) { left: 40%; animation-delay: 1s; }
-        .particle:nth-child(5) { left: 50%; animation-delay: 3s; }
-        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
-        .particle:nth-child(7) { left: 70%; animation-delay: 2.5s; }
-        .particle:nth-child(8) { left: 80%; animation-delay: 4.5s; }
-        .particle:nth-child(9) { left: 90%; animation-delay: 1.5s; }
-        .particle:nth-child(10) { left: 95%; animation-delay: 3.5s; }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            max-width: 1200px;
-            padding: 0 2rem;
-        }
-
-        .hero-label {
-            display: inline-block;
-            background: rgba(0, 212, 255, 0.2);
-            border: 1px solid var(--primary);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            margin-bottom: 2rem;
-            animation: fadeInDown 1s ease;
-        }
-
-        .hero h1 {
-            font-size: 5rem;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 2rem;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-            text-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            animation: fadeInUp 1s ease 0.6s both;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 2rem; }
+        .hero-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.3); }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0, 102, 255, 0.4), rgba(124, 58, 237, 0.4)); }
+        .hero-content { position: relative; z-index: 10; text-align: center; max-width: 1200px; padding: 0 2rem; }
+        .hero-label { display: inline-block; background: rgba(0, 212, 255, 0.2); border: 1px solid var(--primary); padding: 0.5rem 1.5rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; letter-spacing: 2px; margin-bottom: 2rem; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; line-height: 1.2; margin-bottom: 2rem; text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        .hero p { font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 3rem; text-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); line-height: 1.6; }
+        .hero-buttons { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+        
         /* ボタン */
-        .btn {
-            padding: 1.2rem 3rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            color: #fff;
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.6);
-        }
-
-        .btn-outline {
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            color: #fff;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary);
-            background: rgba(0, 212, 255, 0.2);
-        }
-
-        /* セクション共通 */
-        section {
-            padding: 8rem 2rem;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-
-        .section-label {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 212, 255, 0.1));
-            border: 1px solid var(--primary);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-        }
-
-        .section-desc {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* 協議会について */
-        .about {
-            background: linear-gradient(135deg, var(--darker) 0%, #0f1429 100%);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 24px;
-            overflow: hidden;
-            transition: all 0.4s;
-            position: relative;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: slideUp 0.6s ease forwards;
-        }
-
-        .feature-card:nth-child(1) { animation-delay: 0.1s; }
-        .feature-card:nth-child(2) { animation-delay: 0.2s; }
-        .feature-card:nth-child(3) { animation-delay: 0.3s; }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .feature-image {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            filter: brightness(0.7);
-            transition: all 0.4s;
-        }
-
-        .feature-card:hover .feature-image {
-            transform: scale(1.1);
-            filter: brightness(0.9);
-        }
-
-        .feature-content {
-            padding: 2.5rem;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 30px 60px rgba(0, 212, 255, 0.3);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
-        }
-
+        .btn { padding: 1.2rem 3rem; border-radius: 50px; font-weight: 700; font-size: 1.1rem; text-decoration: none; display: inline-block; }
+        .btn-primary { background: linear-gradient(135deg, var(--secondary), var(--primary)); color: #fff; box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4); }
+        .btn-outline { border: 2px solid rgba(255, 255, 255, 0.5); color: #fff; background: rgba(255, 255, 255, 0.1); }
+        
+        /* セクション */
+        section { padding: 8rem 2rem; position: relative; }
+        .section-header { text-align: center; margin-bottom: 5rem; }
+        .section-label { display: inline-block; background: rgba(0, 212, 255, 0.1); border: 1px solid var(--primary); padding: 0.5rem 1.5rem; border-radius: 50px; font-size: 0.9rem; font-weight: 600; letter-spacing: 2px; margin-bottom: 1.5rem; }
+        .section-title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 1.5rem; }
+        .section-desc { font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255, 255, 255, 0.7); max-width: 800px; margin: 0 auto; line-height: 1.8; }
+        
+        /* 協議会 */
+        .about { background: linear-gradient(135deg, var(--darker) 0%, #0f1429 100%); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; max-width: 1400px; margin: 0 auto; }
+        .feature-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 24px; overflow: hidden; position: relative; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--secondary), var(--primary)); }
+        .feature-image { width: 100%; height: 280px; object-fit: cover; filter: brightness(0.7); display: block; }
+        .feature-content { padding: 2.5rem; }
+        .feature-card h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); margin-bottom: 1rem; }
+        .feature-card p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: clamp(0.9rem, 2vw, 1rem); }
+        
         /* 活動実績 */
-        .activities {
-            background: var(--dark);
-        }
-
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 4rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .activity-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            transition: all 0.4s;
-        }
-
-        .activity-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.4);
-        }
-
-        .activity-image {
-            height: 350px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .activity-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.6);
-            transition: transform 0.4s;
-        }
-
-        .activity-card:hover .activity-image img {
-            transform: scale(1.1);
-            filter: brightness(0.8);
-        }
-
-        .activity-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 102, 255, 0.3), rgba(124, 58, 237, 0.3));
-        }
-
-        .activity-content {
-            padding: 2.5rem;
-        }
-
-        .activity-badge {
-            display: inline-block;
-            background: rgba(0, 212, 255, 0.2);
-            color: var(--primary);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .activity-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .activity-card p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .activity-link {
-            color: var(--primary);
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-        }
-
-        .activity-link:hover {
-            color: #fff;
-            gap: 1rem;
-        }
-
-        /* サービス対象 */
-        .services {
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-            position: relative;
-        }
-
-        .services::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .service-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s;
-        }
-
-        .service-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            filter: brightness(0.5);
-            transition: all 0.4s;
-        }
-
-        .service-card:hover .service-image {
-            transform: scale(1.1);
-            filter: brightness(0.7);
-        }
-
-        .service-content {
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .service-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-10px) rotateY(5deg);
-            border-color: var(--primary);
-            box-shadow: 0 25px 50px rgba(0, 212, 255, 0.3);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .service-card p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
-        }
-
+        .activities { background: var(--dark); }
+        .activities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; max-width: 1400px; margin: 0 auto; }
+        .activity-card { background: rgba(255, 255, 255, 0.05); border-radius: 24px; overflow: hidden; border: 1px solid rgba(0, 212, 255, 0.2); }
+        .activity-image { height: 350px; position: relative; overflow: hidden; }
+        .activity-image img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); display: block; }
+        .activity-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(0, 102, 255, 0.3), rgba(124, 58, 237, 0.3)); }
+        .activity-content { padding: 2.5rem; }
+        .activity-badge { display: inline-block; background: rgba(0, 212, 255, 0.2); color: var(--primary); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; }
+        .activity-card h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); margin-bottom: 1rem; }
+        .activity-card p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; margin-bottom: 2rem; font-size: clamp(0.9rem, 2vw, 1rem); }
+        .activity-link { color: var(--primary); font-weight: 600; text-decoration: none; }
+        
+        /* サービス */
+        .services { background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2.5rem; max-width: 1400px; margin: 0 auto; }
+        .service-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 20px; overflow: hidden; }
+        .service-image { width: 100%; height: 200px; object-fit: cover; filter: brightness(0.5); display: block; }
+        .service-content { padding: 2rem; text-align: center; }
+        .service-card h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); margin-bottom: 1rem; }
+        .service-card p { color: rgba(255, 255, 255, 0.7); line-height: 1.7; font-size: clamp(0.85rem, 2vw, 1rem); }
+        
         /* CTA */
-        .cta-section {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.2;
-            animation: zoomIn 20s ease-in-out infinite alternate;
-        }
-
-        .cta-section::before,
-        .cta-section::after {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-            animation: float2 10s ease-in-out infinite;
-        }
-
-        .cta-section::before {
-            top: -250px;
-            right: -250px;
-        }
-
-        .cta-section::after {
-            bottom: -250px;
-            left: -250px;
-            animation-delay: 5s;
-        }
-
-        @keyframes float2 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(50px, 50px); }
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .cta-content h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .cta-content p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            opacity: 0.95;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-
-        .btn-white {
-            background: #fff;
-            color: var(--secondary);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-white:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-        }
-
+        .cta-section { background: linear-gradient(135deg, var(--secondary), #7c3aed); text-align: center; position: relative; overflow: hidden; }
+        .cta-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2; }
+        .cta-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+        .cta-content h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1.5rem; }
+        .cta-content p { font-size: clamp(1rem, 3vw, 1.3rem); margin-bottom: 3rem; line-height: 1.6; }
+        .cta-buttons { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+        .btn-white { background: #fff; color: var(--secondary); }
+        
         /* フッター */
-        footer {
-            background: var(--darker);
-            padding: 5rem 2rem 2rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 4rem;
-            margin-bottom: 4rem;
-        }
-
-        .footer-about h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-about p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-contact {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        .footer-section h4 {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* スクロールで表示 */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.6s ease;
-        }
-
-        .scroll-reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        footer { background: var(--darker); padding: 5rem 2rem 2rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 4rem; }
+        .footer-about h3 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .footer-about p { color: rgba(255, 255, 255, 0.7); line-height: 1.8; margin-bottom: 1.5rem; }
+        .footer-contact { color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-size: 0.95rem; }
+        .footer-section h4 { font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--primary); }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 1rem; }
+        .footer-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 0.95rem; }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; text-align: center; color: rgba(255, 255, 255, 0.5); }
+        
         /* レスポンシブ */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
-
-            .features-grid,
-            .activities-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            nav ul {
-                display: none;
-            }
+            nav ul { display: none; }
+            .mobile-menu-btn { display: block; }
+            section { padding: 4rem 1rem; }
+            .btn { padding: 1rem 2rem; font-size: 1rem; }
         }
-
-        /* デモバナー */
-        .demo-banner {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            z-index: 9999;
-            font-weight: 700;
-            animation: pulse 2s infinite;
+        @media (max-width: 480px) {
+            .hero { min-height: 80vh; }
+            .feature-content, .activity-content, .service-content { padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- ローディング画面 -->
-<div class="loading-screen">
-    <div class="loading-drone">🚁</div>
-</div>
-
-<!-- デモバナー -->
-<div class="demo-banner">
-    🚀 完全版デモ
-</div>
-
-<!-- ヘッダー -->
 <header>
     <nav>
-        <a href="#" class="logo">HIROSHIMA DRONE</a>
+        <a href="index.html" class="logo">HIROSHIMA DRONE</a>
         <ul>
-            <li><a href="#about">協議会について</a></li>
-            <li><a href="#activities">活動実績</a></li>
-            <li><a href="#services">サービス</a></li>
-            <li><a href="#contact" class="cta-btn">お問い合わせ</a></li>
+            <li><a href="pages/about.html">協議会について</a></li>
+            <li><a href="pages/activities.html">活動実績</a></li>
+            <li><a href="pages/services.html">サービス</a></li>
+            <li><a href="pages/contact.html" class="cta-btn">お問い合わせ</a></li>
         </ul>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
     </nav>
 </header>
 
-<!-- ヒーロー -->
+<div class="mobile-nav" id="mobileNav">
+    <ul>
+        <li><a href="pages/about.html">協議会について</a></li>
+        <li><a href="pages/activities.html">活動実績</a></li>
+        <li><a href="pages/services.html">サービス</a></li>
+        <li><a href="pages/contact.html">お問い合わせ</a></li>
+    </ul>
+</div>
+
 <section class="hero">
     <img src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1920&q=80" alt="ドローン" class="hero-image">
     <div class="hero-overlay"></div>
-    <div class="grid-overlay"></div>
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
     <div class="hero-content">
         <div class="hero-label">HIROSHIMA DRONE COUNCIL</div>
         <h1>ドローンで創る<br>広島の未来</h1>
         <p>物流から災害対応まで、ドローンの可能性を広げ、<br>次世代のスマートシティを実現します</p>
         <div class="hero-buttons">
-            <a href="#about" class="btn btn-primary">協議会について →</a>
-            <a href="#contact" class="btn btn-outline">お問い合わせ</a>
+            <a href="pages/about.html" class="btn btn-primary">協議会について</a>
+            <a href="pages/contact.html" class="btn btn-outline">お問い合わせ</a>
         </div>
     </div>
 </section>
 
-<!-- 協議会について -->
 <section id="about" class="about">
-    <div class="section-header scroll-reveal">
+    <div class="section-header">
         <div class="section-label">ABOUT US</div>
         <h2 class="section-title">ひろしまドローン活用推進協議会</h2>
-        <p class="section-desc">
-            物流のみならず、ドローンを広め、活用の可能性について考える。<br>
-            業界を問わず、ドローン技術で広島の未来を切り拓きます。
-        </p>
+        <p class="section-desc">物流のみならず、ドローンを広め、活用の可能性について考える。<br>業界を問わず、ドローン技術で広島の未来を切り拓きます。</p>
     </div>
-    
     <div class="features-grid">
         <div class="feature-card">
             <img src="https://images.unsplash.com/photo-1508614999368-9260051292e5?w=800&q=80" alt="ドローン技術" class="feature-image">
@@ -914,7 +170,6 @@
                 <p>最新のドローン技術を広島全域に普及させ、さまざまな産業での活用を推進します。建設、農業、物流など、あらゆる分野でのドローン導入をサポートします。</p>
             </div>
         </div>
-        
         <div class="feature-card">
             <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80" alt="産業連携" class="feature-image">
             <div class="feature-content">
@@ -922,7 +177,6 @@
                 <p>業界の垣根を越えた連携を促進し、ドローン活用の新しい可能性を探求します。企業、自治体、研究機関が協力し、イノベーションを創出します。</p>
             </div>
         </div>
-        
         <div class="feature-card">
             <img src="https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&q=80" alt="実証実験" class="feature-image">
             <div class="feature-content">
@@ -933,88 +187,76 @@
     </div>
 </section>
 
-<!-- 活動実績 -->
 <section id="activities" class="activities">
-    <div class="section-header scroll-reveal">
+    <div class="section-header">
         <div class="section-label">ACTIVITIES</div>
         <h2 class="section-title">主な活動実績</h2>
-        <p class="section-desc">
-            広島県と連携し、実証実験を通じて<br>
-            ドローンの社会実装を推進しています
-        </p>
+        <p class="section-desc">広島県と連携し、実証実験を通じて<br>ドローンの社会実装を推進しています</p>
     </div>
-    
     <div class="activities-grid">
-        <div class="activity-card scroll-reveal">
+        <div class="activity-card">
             <div class="activity-image">
-                <img src="https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=1200&q=80" alt="災害対応ドローン">
+                <img src="https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=1200&q=80" alt="災害対応">
                 <div class="activity-overlay"></div>
             </div>
             <div class="activity-content">
                 <div class="activity-badge">最新実績</div>
                 <h3>広島県 災害時ドローン実証実験</h3>
                 <p>広島県危機管理課様より受託し、県内における災害時を想定したドローン実証実験を実施。迅速な状況把握と救助活動支援のための運用体制を構築しました。</p>
-                <a href="#" class="activity-link">詳細を見る →</a>
+                <a href="pages/disaster.html" class="activity-link">詳細を見る →</a>
             </div>
         </div>
-        
-        <div class="activity-card scroll-reveal">
+        <div class="activity-card">
             <div class="activity-image">
-                <img src="https://images.unsplash.com/photo-1528460033278-a6ba57020470?w=1200&q=80" alt="物流ドローン">
+                <img src="https://images.unsplash.com/photo-1528460033278-a6ba57020470?w=1200&q=80" alt="物流">
                 <div class="activity-overlay"></div>
             </div>
             <div class="activity-content">
                 <div class="activity-badge">物流</div>
                 <h3>離島間物流実証プロジェクト</h3>
                 <p>瀬戸内海の島しょ部における医薬品・生活物資の配送実験を実施。過疎地域の生活インフラ維持に貢献する新しい物流モデルを検証しています。</p>
-                <a href="#" class="activity-link">詳細を見る →</a>
+                <a href="pages/logistics.html" class="activity-link">詳細を見る →</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- サービス対象 -->
 <section id="services" class="services">
-    <div class="section-header scroll-reveal">
+    <div class="section-header">
         <div class="section-label">TARGET</div>
         <h2 class="section-title">対象業界・サービス</h2>
         <p class="section-desc">業界を問わず、ドローン活用をサポートします</p>
     </div>
-    
     <div class="services-grid">
-        <div class="service-card scroll-reveal">
+        <div class="service-card">
             <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=80" alt="建設業" class="service-image">
             <div class="service-content">
                 <h3>建設業</h3>
                 <p>測量・点検・進捗管理など、建設現場の効率化をドローンで実現</p>
             </div>
         </div>
-        
-        <div class="service-card scroll-reveal">
+        <div class="service-card">
             <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80" alt="農業" class="service-image">
             <div class="service-content">
                 <h3>農業</h3>
                 <p>農薬散布・生育状況確認・スマート農業の推進</p>
             </div>
         </div>
-        
-        <div class="service-card scroll-reveal">
+        <div class="service-card">
             <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="不動産" class="service-image">
             <div class="service-content">
                 <h3>不動産</h3>
                 <p>空撮・VRツアー・物件プロモーションの高度化</p>
             </div>
         </div>
-        
-        <div class="service-card scroll-reveal">
+        <div class="service-card">
             <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="一般企業" class="service-image">
             <div class="service-content">
                 <h3>一般企業</h3>
                 <p>点検・警備・イベント撮影など多様な用途に対応</p>
             </div>
         </div>
-        
-        <div class="service-card scroll-reveal">
+        <div class="service-card">
             <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="個人" class="service-image">
             <div class="service-content">
                 <h3>個人</h3>
@@ -1024,23 +266,18 @@
     </div>
 </section>
 
-<!-- CTA -->
-<section id="contact" class="cta-section">
-    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80" alt="未来の都市" class="cta-bg">
+<section class="cta-section">
+    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80" alt="未来" class="cta-bg">
     <div class="cta-content">
         <h2>一緒に広島の未来を創りませんか？</h2>
-        <p>
-            ドローン活用に興味のある企業・個人の方、<br>
-            ぜひ協議会へのご参加をご検討ください
-        </p>
+        <p>ドローン活用に興味のある企業・個人の方、<br>ぜひ協議会へのご参加をご検討ください</p>
         <div class="cta-buttons">
-            <a href="#" class="btn btn-white">お問い合わせ</a>
-            <a href="#" class="btn btn-outline">資料ダウンロード</a>
+            <a href="pages/contact.html" class="btn btn-white">お問い合わせ</a>
+            <a href="pages/join.html" class="btn btn-outline">入会案内</a>
         </div>
     </div>
 </section>
 
-<!-- フッター -->
 <footer>
     <div class="footer-content">
         <div class="footer-about">
@@ -1054,79 +291,48 @@
                 <p>TEL: 082-501-0309</p>
             </div>
         </div>
-        
         <div class="footer-section">
             <h4>協議会</h4>
             <ul class="footer-links">
-                <li><a href="#about">協議会について</a></li>
-                <li><a href="#">協議会の目的</a></li>
-                <li><a href="#">会員企業</a></li>
-                <li><a href="#">入会案内</a></li>
+                <li><a href="pages/about.html">協議会について</a></li>
+                <li><a href="pages/join.html">入会案内</a></li>
+                <li><a href="pages/members.html">会員企業</a></li>
             </ul>
         </div>
-        
         <div class="footer-section">
             <h4>活動</h4>
             <ul class="footer-links">
-                <li><a href="#activities">活動実績</a></li>
-                <li><a href="#">実証実験</a></li>
-                <li><a href="#">セミナー・イベント</a></li>
-                <li><a href="#">ニュース</a></li>
+                <li><a href="pages/activities.html">活動実績</a></li>
+                <li><a href="pages/disaster.html">災害対応実験</a></li>
+                <li><a href="pages/logistics.html">物流実証</a></li>
             </ul>
         </div>
-        
         <div class="footer-section">
             <h4>サポート</h4>
             <ul class="footer-links">
-                <li><a href="#contact">お問い合わせ</a></li>
-                <li><a href="#">よくある質問</a></li>
-                <li><a href="#">資料ダウンロード</a></li>
-                <li><a href="#">プライバシーポリシー</a></li>
+                <li><a href="pages/contact.html">お問い合わせ</a></li>
+                <li><a href="pages/faq.html">よくある質問</a></li>
+                <li><a href="pages/services.html">サービス一覧</a></li>
             </ul>
         </div>
     </div>
-    
     <div class="footer-bottom">
         <p>&copy; 2025 ひろしまドローン活用推進協議会. All Rights Reserved.</p>
     </div>
 </footer>
 
 <script>
-// スムーズスクロール
+function toggleMenu() {
+    const nav = document.getElementById('mobileNav');
+    nav.classList.toggle('active');
+}
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        if(target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
-
-// ヘッダースクロール
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if(window.scrollY > 100) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-    
-    // スクロールで要素を表示
-    const reveals = document.querySelectorAll('.scroll-reveal');
-    reveals.forEach(element => {
-        const windowHeight = window.innerHeight;
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < windowHeight - elementVisible) {
-            element.classList.add('active');
-        }
-    });
-});
-
-// 初回ロード時もチェック
-window.dispatchEvent(new Event('scroll'));
 </script>
 
 </body>

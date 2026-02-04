@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>災害対応実証実験 | ひろしまドローン活用推進協議会</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #00d4ff; --secondary: #0066ff; --dark: #0a0e27; --darker: #050816; }
+        body { font-family: 'Noto Sans JP', sans-serif; background: var(--darker); color: #fff; }
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(10, 14, 39, 0.98); border-bottom: 1px solid rgba(0, 212, 255, 0.2); }
+        nav { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-decoration: none; }
+        .btn-home { background: linear-gradient(135deg, var(--secondary), var(--primary)); padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700; color: #fff; text-decoration: none; }
+        main { padding: 150px 2rem 50px; max-width: 1200px; margin: 0 auto; }
+        h1 { font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: 2rem; color: var(--primary); }
+        .hero-image { width: 100%; height: 400px; object-fit: cover; border-radius: 20px; margin-bottom: 3rem; }
+        .content { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 24px; padding: 3rem; margin-bottom: 3rem; }
+        .content h2 { font-size: 2rem; margin: 2rem 0 1rem; color: var(--primary); }
+        .content p { line-height: 1.8; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.8); }
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0; }
+        .image-card { border-radius: 15px; overflow: hidden; }
+        .image-card img { width: 100%; height: 250px; object-fit: cover; }
+        @media (max-width: 768px) { main { padding: 120px 1rem 30px; } .content { padding: 2rem; } }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="../index.html" class="logo">HIROSHIMA DRONE</a>
+        <a href="../index.html" class="btn-home">← ホームに戻る</a>
+    </nav>
+</header>
+<main>
+    <h1>災害対応実証実験</h1>
+    <img src="https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=1200&q=80" alt="災害対応" class="hero-image">
+    
+    <div class="content">
+        <h2>プロジェクト概要</h2>
+        <p>広島県危機管理課様より受託し、災害時におけるドローンの有効活用を目的とした実証実験を実施しました。土砂災害や河川氾濫など、広島県特有の災害リスクに対応できる運用体制の構築を目指しています。</p>
+        
+        <div class="image-grid">
+            <div class="image-card"><img src="https://images.unsplash.com/photo-1527482797697-8795b05a13fe?w=600&q=80" alt="ドローン災害"></div>
+            <div class="image-card"><img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=600&q=80" alt="レスキュー"></div>
+            <div class="image-card"><img src="https://images.unsplash.com/photo-1563906267088-b029e7101114?w=600&q=80" alt="災害現場"></div>
+        </div>
+
+        <h2>実施内容</h2>
+        <p><strong>1. 土砂災害現場の状況確認</strong><br>
+        高性能カメラを搭載したドローンで、二次災害のリスクがある現場を上空から安全に確認。3Dマッピング技術により被害範囲を正確に把握しました。</p>
+        
+        <p><strong>2. 孤立地域への物資輸送</strong><br>
+        道路が寸断された地域への医薬品や食料の緊急輸送実験を実施。最大5kgの荷物を約10km先まで自律飛行で配送することに成功しました。</p>
+        
+        <p><strong>3. 赤外線カメラによる捜索</strong><br>
+        夜間や視界不良時でも要救助者を発見できる赤外線カメラシステムを検証。従来の捜索方法と比較して、発見時間を大幅に短縮できることを実証しました。</p>
+        
+        <p><strong>4. リアルタイム映像伝送</strong><br>
+        災害対策本部へのリアルタイム映像伝送システムを構築。現場の状況を即座に共有し、迅速な意思決定を支援する体制を整えました。</p>
+
+        <h2>成果と今後の展開</h2>
+        <p>本実証実験により、ドローンが災害対応において極めて有効なツールであることが証明されました。2026年度からは、県内全域での本格運用を目指し、以下の取り組みを進めています：</p>
+        <ul style="margin: 1rem 0 1.5rem 2rem; line-height: 2; color: rgba(255, 255, 255, 0.8);">
+            <li>災害対応ドローンパイロットの育成</li>
+            <li>機体・設備の整備拡充</li>
+            <li>他県との広域連携体制の構築</li>
+            <li>AI画像解析技術の導入</li>
+        </ul>
+    </div>
+</main>
+</body>
+</html>
